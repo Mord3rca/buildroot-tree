@@ -1,0 +1,10 @@
+config BR2_PACKAGE_DYNDNS_UPDATER
+	bool "dyndns-updater"
+	help
+	  Install dyndns-updater scripts set
+
+	select BR2_PACKAGE_BIND
+	select BR2_PACKAGE_BIND_TOOLS
+
+	select BR2_PACKAGE_LIBCURL
+	select BR2_PACKAGE_LIBCURL_CURL
