@@ -3,8 +3,12 @@ config BR2_PACKAGE_DYNDNS_UPDATER
 	help
 	  Install dyndns-updater scripts set
 
+	select BR2_PACKAGE_BASH
+
 	select BR2_PACKAGE_BIND
 	select BR2_PACKAGE_BIND_TOOLS
+
+	select BR2_PACKAGE_CA_CERTIFICATES
 
 	select BR2_PACKAGE_LIBCURL
 	select BR2_PACKAGE_LIBCURL_CURL

@@ -1,10 +1,14 @@
 DYNDNS_UPDATER_VERSION = none
 DYNDNS_UPDATER_SITE = $(WORKSPACE_TOPLEVEL)/package/dyndns-updater
 DYNDNS_UPDATER_SITE_METHOD = local
-DYNDNS_UPDATER_DEPENDENCIES = bind libcurl
+DYNDNS_UPDATER_DEPENDENCIES = bash bind ca-certificates libcurl
 
 define DYNDNS_UPDATER_INSTALL_TARGET_CMDS
 	$(MAKE) -C $(@D) DESTDIR=$(TARGET_DIR) PREFIX=/usr install
+endef
+
+define DYNDNS_UPDATER_INSTALL_INIT_SYSTEMD
+	$(MAKE) -C $(@D) DESTDIR=$(TARGET_DIR) PREFIX=/usr install-systemd
 endef
 
 $(eval $(generic-package))
