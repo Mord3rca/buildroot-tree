@@ -1,0 +1,54 @@
+From 03d210c9ca07a04c803f358c5e8f3855682be039 Mon Sep 17 00:00:00 2001
+From: Mord3rca <morderca@morderca.net>
+Date: Sat, 27 Sep 2025 22:03:14 +0200
+Subject: [PATCH 3/7] Use `easy-rsa` from system
+
+---
+ auto_install/install.sh | 17 ++++-------------
+ 1 file changed, 4 insertions(+), 13 deletions(-)
+
+diff --git a/auto_install/install.sh b/auto_install/install.sh
+index 09c4198..1ae501c 100755
+--- a/auto_install/install.sh
++++ b/auto_install/install.sh
+@@ -51,10 +51,6 @@ BASE_DEPS_ALPINE+=(perl libqrencode-tools)
+ # that may have been installed by the user for other reasons
+ INSTALLED_PACKAGES=()
+ 
+-######## URLs ########
+-easyrsaVer="3.2.3"
+-easyrsaRel="https://github.com/OpenVPN/easy-rsa/releases/download/v${easyrsaVer}/EasyRSA-${easyrsaVer}.tgz"
+-
+ ######## Undocumented Flags. Shhh ########
+ runUnattended=false
+ usePiholeDNS=false
+@@ -2914,14 +2910,9 @@ confOpenVPN() {
+     ${SUDO} rm -rf /etc/openvpn/easy-rsa/
+   fi
+ 
+-  # Get easy-rsa
+-  curl -sSfL "${easyrsaRel}" \
+-    | ${SUDO} tar -xz --one-top-level=/etc/openvpn/easy-rsa --strip-components 1
+-
+-  if [[ ! -s /etc/openvpn/easy-rsa/easyrsa ]]; then
+-    err "${0}: ERR: Failed to download EasyRSA."
+-    exit 1
+-  fi
++  # Use System easy-rsa
++  ${SUDO} mkdir -p /etc/openvpn/easy-rsa
++  ${SUDO} ln -sf "$(command -v easyrsa)" /etc/openvpn/easy-rsa
+ 
+   # fix ownership
+   ${SUDO} chown -R root:root /etc/openvpn/easy-rsa
+@@ -2944,7 +2935,7 @@ confOpenVPN() {
+   ${SUDOE} ./easyrsa --batch init-pki
+ 
+   # Copy template vars file
+-  ${SUDOE} cp vars.example pki/vars
++  ${SUDOE} cp /etc/easy-rsa/vars pki/vars
+ 
+   # Set elliptic curve certificate or traditional rsa certificates
+   ${SUDOE} sed -i \
+-- 
+2.49.1
+

@@ -1,0 +1,58 @@
+From 78a8d03b51d24f602b33f8917b99db52cb90631b Mon Sep 17 00:00:00 2001
+From: Mord3rca <morderca@morderca.net>
+Date: Sat, 27 Sep 2025 21:59:47 +0200
+Subject: [PATCH 2/7] Dont use distro package manager
+
+---
+ auto_install/install.sh | 18 ------------------
+ 1 file changed, 18 deletions(-)
+
+diff --git a/auto_install/install.sh b/auto_install/install.sh
+index 4eb344a..09c4198 100755
+--- a/auto_install/install.sh
++++ b/auto_install/install.sh
+@@ -121,16 +121,6 @@ main() {
+     verifyFreeDiskSpace
+   fi
+ 
+-  updatePackageCache
+-  notifyPackageUpdatesAvailable
+-  preconfigurePackages
+-
+-  if [[ "${PLAT}" == 'Alpine' ]]; then
+-    installDependentPackages BASE_DEPS_ALPINE[@]
+-  else
+-    installDependentPackages BASE_DEPS[@]
+-  fi
+-
+   welcomeDialogs
+ 
+   if [[ "${pivpnforceipv6}" -eq 1 ]]; then
+@@ -172,12 +162,6 @@ main() {
+   fi
+ 
+   restartServices
+-  # Ask if unattended-upgrades will be enabled
+-  askUnattendedUpgrades
+-
+-  if [[ "${UNATTUPG}" -eq 1 ]]; then
+-    confUnattendedUpgrades
+-  fi
+ 
+   writeConfigFiles
+   installScripts
+@@ -1694,11 +1678,9 @@ installPiVPN() {
+   if [[ "${VPN}" == 'openvpn' ]]; then
+     setOpenVPNDefaultVars
+     askAboutCustomizing
+-    installOpenVPN
+     askCustomProto
+   elif [[ "${VPN}" == 'wireguard' ]]; then
+     setWireguardDefaultVars
+-    installWireGuard
+   fi
+ 
+   askCustomPort
+-- 
+2.49.1
+

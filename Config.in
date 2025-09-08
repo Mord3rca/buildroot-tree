@@ -1,2 +1,3 @@
 source "$BR2_EXTERNAL_MORDERCA_TREE_PATH/package/dyndns-updater/Config.in"
 source "$BR2_EXTERNAL_MORDERCA_TREE_PATH/package/grepcidr/Config.in"
+source "$BR2_EXTERNAL_MORDERCA_TREE_PATH/package/pivpn/Config.in"

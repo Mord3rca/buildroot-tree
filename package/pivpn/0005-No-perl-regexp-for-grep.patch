@@ -1,0 +1,28 @@
+From ff018fcbee7f23f2db168ce36d216d305358d748 Mon Sep 17 00:00:00 2001
+From: Mord3rca <morderca@morderca.net>
+Date: Sat, 27 Sep 2025 22:04:35 +0200
+Subject: [PATCH 5/7] No perl regexp for grep
+
+---
+ auto_install/install.sh | 5 +----
+ 1 file changed, 1 insertion(+), 4 deletions(-)
+
+diff --git a/auto_install/install.sh b/auto_install/install.sh
+index cc583ed..a84710d 100755
+--- a/auto_install/install.sh
++++ b/auto_install/install.sh
+@@ -2557,10 +2557,7 @@ Please try again.
+ # input for a valid custom domain
+ validDomain() {
+   local domain="${1}"
+-  local perl_regexp='(?=^.{4,253}$)'
+-  perl_regexp="${perl_regexp}(^(?:[a-zA-Z0-9](?:(?:[a-zA-Z0-9\-]){0,61}"
+-  perl_regexp="${perl_regexp}[a-zA-Z0-9])?\.)+[a-zA-Z]{2,}$)"
+-  grep -qP "${perl_regexp}" <<< "${domain}"
++  true
+ }
+ 
+ # This procedure allows a user to specify a custom
+-- 
+2.49.1
+

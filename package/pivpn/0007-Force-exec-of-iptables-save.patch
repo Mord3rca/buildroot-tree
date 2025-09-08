@@ -1,0 +1,41 @@
+From 1222d3fee7c0abf90809814a03cc9b1f8c4824a0 Mon Sep 17 00:00:00 2001
+From: Mord3rca <morderca@morderca.net>
+Date: Sun, 28 Sep 2025 19:11:30 +0200
+Subject: [PATCH 7/7] Force exec of iptables-save
+
+---
+ auto_install/install.sh | 18 ++++--------------
+ 1 file changed, 4 insertions(+), 14 deletions(-)
+
+diff --git a/auto_install/install.sh b/auto_install/install.sh
+index 266c75b..8c6be09 100755
+--- a/auto_install/install.sh
++++ b/auto_install/install.sh
+@@ -3567,20 +3567,10 @@ confNetwork() {
+     fi
+   fi
+ 
+-  case "${PLAT}" in
+-    Debian | Raspbian | Ubuntu)
+-      ${SUDO} iptables-save \
+-        | ${SUDO} tee /etc/iptables/rules.v4 > /dev/null
+-      ${SUDO} ip6tables-save \
+-        | ${SUDO} tee /etc/iptables/rules.v6 > /dev/null
+-      ;;
+-	Alpine)
+-	  ${SUDO} rc-service iptables save
+-	  ${SUDO} rc-service ip6tables save
+-	  ${SUDO} rc-update add iptables
+-	  ${SUDO} rc-update add ip6tables
+-	  ;;
+-  esac
++  ${SUDO} iptables-save \
++    | ${SUDO} tee /etc/iptables/rules.v4 > /dev/null
++  ${SUDO} ip6tables-save \
++    | ${SUDO} tee /etc/iptables/rules.v6 > /dev/null
+ 
+   {
+     echo "INPUT_CHAIN_EDITED=${INPUT_CHAIN_EDITED}"
+-- 
+2.49.1
+
