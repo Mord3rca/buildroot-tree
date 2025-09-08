@@ -1,0 +1,49 @@
+From 4ba5cc464b912713948f1a244cc06937ea0102d4 Mon Sep 17 00:00:00 2001
+From: Mord3rca <morderca@morderca.net>
+Date: Sun, 28 Sep 2025 15:35:15 +0200
+Subject: [PATCH 6/7] Patching service restart function so it does something
+
+---
+ auto_install/install.sh | 26 ++------------------------
+ 1 file changed, 2 insertions(+), 24 deletions(-)
+
+diff --git a/auto_install/install.sh b/auto_install/install.sh
+index a84710d..266c75b 100755
+--- a/auto_install/install.sh
++++ b/auto_install/install.sh
+@@ -3622,30 +3622,8 @@ restartServices() {
+   # Start services
+   echo "::: Restarting services..."
+ 
+-  case "${PLAT}" in
+-    Debian | Raspbian | Ubuntu)
+-      if [[ "${VPN}" == "openvpn" ]]; then
+-        ${SUDO} systemctl enable openvpn.service &> /dev/null
+-        ${SUDO} systemctl restart openvpn.service
+-      elif [[ "${VPN}" == "wireguard" ]]; then
+-        ${SUDO} systemctl enable wg-quick@wg0.service &> /dev/null
+-        ${SUDO} systemctl restart wg-quick@wg0.service
+-      fi
+-
+-      ;;
+-    Alpine)
+-      if [[ "${VPN}" == 'openvpn' ]]; then
+-        ${SUDO} rc-update add openvpn default &> /dev/null
+-        ${SUDO} rc-service -s openvpn restart
+-        ${SUDO} rc-service -N openvpn start
+-      elif [[ "${VPN}" == 'wireguard' ]]; then
+-        ${SUDO} rc-update add wg-quick default &> /dev/null
+-        ${SUDO} rc-service -s wg-quick restart
+-        ${SUDO} rc-service -N wg-quick start
+-      fi
+-
+-      ;;
+-  esac
++  ${SUDO} systemctl enable --now openvpn &>/dev/null
++  ${SUDO} systemctl restart openvpn
+ }
+ 
+ askUnattendedUpgrades() {
+-- 
+2.49.1
+

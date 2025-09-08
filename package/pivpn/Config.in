@@ -1,0 +1,46 @@
+config BR2_PACKAGE_PIVPN
+	bool "pivpn"
+	help
+	  Installing pivpn, the simplest VPN installer designed for RPi
+
+	select BR2_PACKAGE_COREUTILS
+	select BR2_PACKAGE_EASY_RSA
+	select BR2_PACKAGE_GAWK
+	select BR2_PACKAGE_GETENT
+	select BR2_PACKAGE_GREP
+	select BR2_PACKAGE_GREPCIDR
+	select BR2_PACKAGE_IPROUTE2
+	select BR2_PACKAGE_IPTABLES
+	select BR2_PACKAGE_PROCPS_NG
+	select BR2_PACKAGE_NET_TOOLS
+	select BR2_PACKAGE_UTIL_LINUX
+	select BR2_PACKAGE_SED
+
+	select BR2_PACKAGE_FINDUTILS
+	select BR2_PACKAGE_SYSTEMD
+	select BR2_PACKAGE_TAR
+	select BR2_PACKAGE_GZIP
+
+if BR2_PACKAGE_PIVPN
+
+choice
+	prompt "pivpn backend"
+
+config BR2_PACKAGE_PIVPN_OPENVPN_BACKEND
+	bool "openvpn"
+
+	select BR2_PACKAGE_OPENVPN
+
+config BR2_PACKAGE_PIVPN_WIREGUARD_BACKEND
+	bool "wireguard"
+
+	select BR2_PACKAGE_WIREGUARD
+
+endchoice
+
+config BR2_PACKAGE_PIVPN_BACKEND
+	string
+	default "openvpn" if BR2_PACKAGE_PIVPN_OPENVPN_BACKEND
+	default "wireguard" if BR2_PACKAGE_PIVPN_WIREGUARD_BACKEND
+
+endif

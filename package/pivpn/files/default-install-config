@@ -1,0 +1,9 @@
+IPv4dev=eth0
+IPv6dev=eth0
+install_user=pivpn-adm
+install_home=/var/lib/pivpn-adm
+VPN=openvpn
+pivpnDNS1=8.8.8.8
+pivpnDNS2=8.8.4.4
+pivpnHOST=francis.lan
+

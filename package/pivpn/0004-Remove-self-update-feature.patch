@@ -1,0 +1,32 @@
+From d5829ac2b14afe708eab1b6c2c68c557f57fb4fb Mon Sep 17 00:00:00 2001
+From: Mord3rca <morderca@morderca.net>
+Date: Sat, 27 Sep 2025 22:03:47 +0200
+Subject: [PATCH 4/7] Remove self-update feature
+
+---
+ auto_install/install.sh | 2 --
+ 1 file changed, 2 deletions(-)
+
+diff --git a/auto_install/install.sh b/auto_install/install.sh
+index 1ae501c..cc583ed 100755
+--- a/auto_install/install.sh
++++ b/auto_install/install.sh
+@@ -148,7 +148,6 @@ main() {
+   fi
+ 
+   chooseUser
+-  cloneOrUpdateRepos
+ 
+   # Install
+   if installPiVPN; then
+@@ -160,7 +159,6 @@ main() {
+   restartServices
+ 
+   writeConfigFiles
+-  installScripts
+   displayFinalMessage
+   echo ":::"
+ }
+-- 
+2.49.1
+
