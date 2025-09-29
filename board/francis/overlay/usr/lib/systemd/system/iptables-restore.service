@@ -1,0 +1,12 @@
+[Unit]
+Description=Iptables restore service
+After=network.target
+
+[Service]
+Type=oneshot
+RemainAfterExit=yes
+ExecStart=iptables-restore /etc/iptables/rules.v4
+ExecStop=iptables-save -f /etc/iptables/rules.v4
+
+[Install]
+WantedBy=multi-user.target
