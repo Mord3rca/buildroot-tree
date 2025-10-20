@@ -5,7 +5,7 @@ After=network.target
 [Service]
 Type=oneshot
 RemainAfterExit=yes
-ExecStart=iptables-restore /etc/iptables/rules.v4
+ExecStart=iptables-restore -w 5 /etc/iptables/rules.v4
 ExecStop=iptables-save -f /etc/iptables/rules.v4
 
 [Install]
